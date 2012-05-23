@@ -5,6 +5,8 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.io.StringBufferInputStream;
+import java.io.StringWriter;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -19,7 +21,9 @@ import android.graphics.drawable.BitmapDrawable;
 public class Connector {
 
 	public static final String DEFAULT_SERVICE_URL = "http://172.17.37.69:8080/task3/puzzle";
+	public static final String ANSWER_SERVICE_URL = "http://172.17.37.69:8080/task3/solution/";
 	private static final Object[][] EMPTPY_SERVICE_RESPONCE = new Object[1][1];
+	private static final String TEAM_ID = "fresko_team";
 	private String m_url;
 
 	public Connector(String url) {
@@ -107,6 +111,38 @@ public class Connector {
 		BitmapDrawable bmd = new BitmapDrawable(bytes);
 		pic = bmd.getBitmap();
 		return pic;
+	}
+
+	public String sendAnswer(String secret) {
+		HttpClient httpclient = new DefaultHttpClient();
+		httpclient.getParams().setParameter("teamId", TEAM_ID);
+		HttpGet httpget = new HttpGet(ANSWER_SERVICE_URL + secret);
+		HttpResponse response;
+		try {
+			response = httpclient.execute(httpget);
+			HttpEntity entity = response.getEntity();
+			if (entity != null) {
+				InputStream instream = entity.getContent();
+				
+				return convertStreamToString(instream);
+			}
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+	
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		throw new RuntimeException("Answer sending failure!!!");
+		
+	}
+	
+	public static String convertStreamToString(java.io.InputStream is) {
+	    try {
+	        return new java.util.Scanner(is).useDelimiter("\\A").next();
+	    } catch (java.util.NoSuchElementException e) {
+	        return "";
+	    }
 	}
 
 }

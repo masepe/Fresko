@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class Retriver extends Activity {
+	protected static final String TEAM_ID = "fresko_team";
 	Connector connector;
 	WorkSurface surface;
 
@@ -39,6 +40,15 @@ public class Retriver extends Activity {
 			}
 		});
 		Button buttonSend = (Button) findViewById(R.id.buttonSend);
+		buttonSend.setOnClickListener(new View.OnClickListener( ) {
+			
+			@Override
+			public void onClick(View v) {
+				String secret = "dummy";		
+				String answer = connector.sendAnswer(secret);
+				Log.w("Answer", answer);
+			}
+		});
 		Log.w("Fresko", "End of onCreate");
 	}
 }
