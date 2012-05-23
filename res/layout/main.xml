@@ -4,9 +4,28 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="fill_parent"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+ 		<SurfaceView android:id="@+id/workTable" android:layout_width="wrap_content" android:layout_height="wrap_content"></SurfaceView>
+    	<LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello" />
+        android:orientation="vertical" >
 
+        <Button
+            android:id="@+id/buttonLoad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/buttonSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
+    	</LinearLayout>
+    </FrameLayout>
+    
 </LinearLayout>
