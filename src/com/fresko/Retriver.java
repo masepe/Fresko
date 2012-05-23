@@ -26,7 +26,8 @@ public class Retriver extends Activity {
 			Log.w("Fresko", e);
 			e.printStackTrace();
 		}
-        surface = new WorkSurface(this);
+        setContentView(R.layout.main);
+        surface = (WorkSurface)findViewById(R.id.workTable);
         surface.setChunks(array);
         Button buttonLoad = new Button(this.getApplicationContext());
         Button buttonSend = new Button(this.getApplicationContext());
