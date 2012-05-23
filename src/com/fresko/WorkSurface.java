@@ -50,7 +50,7 @@ public class WorkSurface extends SurfaceView implements SurfaceHolder.Callback {
 	Bitmap buffer = null;
 
 	public WorkSurface(Context context, AttributeSet attrs) {
-		super(context);
+		super(context, attrs);
 		mContext = context;
 
 		// register our interest in hearing about changes to our surface

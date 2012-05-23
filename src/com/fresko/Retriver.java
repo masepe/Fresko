@@ -17,8 +17,6 @@ public class Retriver extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// requestWindowFeature(Window.FEATURE_NO_TITLE);
-		connector = new Connector(Connector.DEFAULT_SERVICE_URL);
 
 		setContentView(R.layout.main);
 		surface = (WorkSurface) findViewById(R.id.workTable);
@@ -27,6 +25,7 @@ public class Retriver extends Activity {
 		buttonLoad.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				if (surface.getChunks() == null) {
+					connector = new Connector(Connector.DEFAULT_SERVICE_URL);
 					Bitmap[][] array = null;
 					try {
 						array = connector.connectAsArrayOfImages();

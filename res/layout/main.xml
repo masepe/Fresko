@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" 
         android:id="@+id/main_layout">
- 		<view android:id="@+id/workTable" android:layout_width="wrap_content" android:layout_height="wrap_content" class="com.fresko.WorkingSurface"/>
+ 		<view android:id="@+id/workTable" android:layout_width="wrap_content" android:layout_height="wrap_content" class="com.fresko.WorkSurface"/>
     	<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
