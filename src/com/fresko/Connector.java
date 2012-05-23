@@ -13,6 +13,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
 public class Connector {
@@ -47,7 +49,7 @@ public class Connector {
 		throw new RuntimeException(m_url + " connection failure!");
 	}
 
-	public Drawable[][] connectAsArrayOfImages() throws IOException {
+	public Bitmap[][] connectAsArrayOfImages() throws IOException {
 		Object[][] responseArray = EMPTPY_SERVICE_RESPONCE;
 		InputStream ip = connect();
 
@@ -86,7 +88,16 @@ public class Connector {
 			}
 		}
 
-		return convertToArrayOfDrawables(responseArray);
+		return convertToArrayOfBitmaps(responseArray);
+	}
+
+	private Bitmap[][] convertToArrayOfBitmaps(Object[][] responseArray) {
+		Bitmap[][] picturesMatrix = new Bitmap[responseArray.length][responseArray[0].length];
+		for (int i = 0; i < responseArray.length; i++)
+			for (int j = 0; j < responseArray[i].length; j++) {
+				picturesMatrix[i][j] = convertStreamToBitmap((byte[]) responseArray[i][j]);
+			}
+		return picturesMatrix;
 	}
 
 	private Drawable[][] convertToArrayOfDrawables(Object[][] responseArray) {
@@ -104,6 +115,15 @@ public class Connector {
 		String srcName = "image";
 		picture = Drawable.createFromStream(ip, srcName);
 		return picture;
+	}
+
+	private Bitmap convertStreamToBitmap(byte[] responseArray) {
+		Bitmap pic = null;
+		byte[] data = responseArray;
+		ByteArrayInputStream bytes = new ByteArrayInputStream(data);
+		BitmapDrawable bmd = new BitmapDrawable(bytes);
+		pic = bmd.getBitmap();
+		return pic;
 	}
 
 	public static void main(String... strings) {
