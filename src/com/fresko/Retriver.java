@@ -3,9 +3,8 @@ package com.fresko;
 import java.io.IOException;
 
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.Window;
 import android.util.Log;
 
 public class Retriver extends Activity {
@@ -20,7 +19,7 @@ public class Retriver extends Activity {
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
         connector = new Connector(Connector.DEFAULT_SERVICE_URL);
         try {
-			Drawable[][] array = connector.connectAsArrayOfImages();
+			Bitmap[][] array = connector.connectAsArrayOfImages();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			Log.w("Fresko", e);
