@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -48,7 +49,7 @@ public class WorkSurface extends SurfaceView implements SurfaceHolder.Callback {
 
 	Bitmap buffer = null;
 
-	public WorkSurface(Context context) {
+	public WorkSurface(Context context, AttributeSet attrs) {
 		super(context);
 		mContext = context;
 
