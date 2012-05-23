@@ -3,31 +3,65 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" 
         android:id="@+id/main_layout">
- 		<view android:id="@+id/workTable" android:layout_width="fill_parent" android:layout_height="fill_parent" class="com.fresko.WorkSurface"/>
-    	<LinearLayout
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/buttons_layout" >
+        android:layout_height="wrap_content" android:id="@+id/table_layout">
 
-        <Button
-            android:id="@+id/buttonLoad"
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" >
+ 		<view android:id="@+id/workTable" 
+ 		    	android:layout_width="420px"
+                android:layout_height="300px" class="com.fresko.WorkSurface"/>
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/buttonLoad"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Load Puzzle" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:baselineAligned="false" >
 
-        <Button
-            android:id="@+id/buttonSend"
+            <Button
+                android:id="@+id/buttonSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Send" />
+
+            <EditText
+                android:id="@+id/editText1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow4"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button" />
+            android:layout_height="wrap_content" >
 
-    	</LinearLayout>
+        </TableRow>
+    </TableLayout>
     </FrameLayout>
     
 </LinearLayout>

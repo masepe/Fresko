@@ -26,7 +26,8 @@ public class Retriver extends Activity implements WorkSurface.TouchCallback {
 		final Button buttonLoad = (Button) findViewById(R.id.buttonLoad);
 		buttonLoad.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				if (surface.getChunks() == null) {
+				//if (surface.getChunks() == null) 
+				{
 					connector = new Connector(Connector.DEFAULT_SERVICE_URL);
 					Bitmap[][] array = null;
 					try {
