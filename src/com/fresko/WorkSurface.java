@@ -221,8 +221,8 @@ public class WorkSurface extends SurfaceView implements SurfaceHolder.Callback {
 									/ (float) chunks.length)));
 					updateAfterEvent();
 					Bitmap selectedChunk = chunks[selected.y][selected.x];
-					chunks[selected.y][selected.x] = chunks[destination.y][selected.x];
-					chunks[destination.y][selected.x] = selectedChunk;
+					chunks[selected.y][selected.x] = chunks[destination.y][destination.x];
+					chunks[destination.y][destination.x] = selectedChunk;
 					updateAfterEvent();
 					touchCallback.handleDestinationUpdate();
 					selected = null;
