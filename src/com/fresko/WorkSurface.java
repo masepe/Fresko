@@ -97,7 +97,7 @@ public class WorkSurface extends SurfaceView implements SurfaceHolder.Callback {
 				canvas.drawBitmap(chunks[y][x++], posX, posY, paint_antialisedSolid);
 				posX =+ chunkWidth;
 			}
-			y ++;
+			y ++; x = 0;
 			posY =+ chunkHeight;
 		}
 		canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(),
@@ -122,6 +122,7 @@ public class WorkSurface extends SurfaceView implements SurfaceHolder.Callback {
 		this.chunks = chunks;
 		buffer = Bitmap.createBitmap(chunks[0][0].getWidth() * chunks[0].length,
 				chunks[0][0].getHeight() * chunks.length, Bitmap.Config.ARGB_8888);
+		updateAfterEvent();
 	}
 
 	public Point getSelected() {

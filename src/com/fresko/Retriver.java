@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-public class Retriver extends Activity {
+public class Retriver extends Activity implements WorkSurface.TouchCallback {
 	protected static final String TEAM_ID = "fresko_team";
 	Connector connector;
 	WorkSurface surface;
@@ -21,6 +21,7 @@ public class Retriver extends Activity {
 
 		setContentView(R.layout.main);
 		surface = (WorkSurface) findViewById(R.id.workTable);
+		surface.setTouchCallback(this);
 
 		final Button buttonLoad = (Button) findViewById(R.id.buttonLoad);
 		buttonLoad.setOnClickListener(new View.OnClickListener() {
@@ -50,5 +51,15 @@ public class Retriver extends Activity {
 			}
 		});
 		Log.w("Fresko", "End of onCreate");
+	}
+
+	@Override
+	public void handleSelectedUpdate() {
+		Log.w("Fresko", "Selected");
+	}
+
+	@Override
+	public void handleDestinationUpdate() {
+		Log.w("Fresko", "Destination");
 	}
 }
