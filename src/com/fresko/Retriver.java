@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class Retriver extends Activity implements WorkSurface.TouchCallback {
 	protected static final String TEAM_ID = "fresko_team";
@@ -46,7 +47,7 @@ public class Retriver extends Activity implements WorkSurface.TouchCallback {
 			
 			@Override
 			public void onClick(View v) {
-				String secret = "dummy";		
+				String secret = ((EditText)findViewById(R.id.editText1)).getText().toString();		
 				String answer = connector.sendAnswer(secret);
 				Log.w("Answer", answer);
 			}
