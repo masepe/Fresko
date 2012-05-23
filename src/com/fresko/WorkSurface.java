@@ -32,8 +32,9 @@ public class WorkSurface extends SurfaceView implements SurfaceHolder.Callback {
 
 	static Paint paint_antialisedSolid = new Paint(Paint.ANTI_ALIAS_FLAG);
 	static {
-		paint_antialisedSolid.setStyle(Paint.Style.STROKE);
-		paint_antialisedSolid.setColor(Color.CYAN);
+		paint_antialisedSolid.setAntiAlias(true);
+		paint_antialisedSolid.setFilterBitmap(true);
+		paint_antialisedSolid.setDither(true);
 	}
 	static Paint paint_antialisedDarker = new Paint(Paint.ANTI_ALIAS_FLAG);
 	static {
@@ -73,7 +74,7 @@ public class WorkSurface extends SurfaceView implements SurfaceHolder.Callback {
 		buffer = null;
 	}
 
-	public void updateAfterEvent() {
+	public synchronized void updateAfterEvent() {
 		SurfaceHolder holder = getHolder();
 		Canvas c = holder.lockCanvas(null);
 		updateBuffer();
@@ -112,7 +113,16 @@ public class WorkSurface extends SurfaceView implements SurfaceHolder.Callback {
 	 */
 	public void doDraw(Canvas nativeCanvas) {
 		//scale
-		nativeCanvas.drawBitmap(buffer, 0, 0, null);
+		nativeCanvas.save();
+		if(getWidth() != 0 && buffer != null) {
+			//scale
+			nativeCanvas.save();
+			nativeCanvas.scale(getWidth()/buffer.getWidth(), getHeight()/buffer.getHeight());
+			nativeCanvas.drawBitmap(buffer, 0, 0, null);
+			nativeCanvas.restore();
+		} else {
+			nativeCanvas.drawBitmap(buffer, 0, 0, null);
+		}
 	}
 
 	public Bitmap[][] getChunks() {
@@ -204,6 +214,8 @@ public class WorkSurface extends SurfaceView implements SurfaceHolder.Callback {
 							chunks[selected.y][selected.x] = chunks[destination.y][selected.x];
 							chunks[destination.y][selected.x] = selectedChunk;
 							updateAfterEvent();
+							selected = null;
+							destination =null;
 						};
 					}.start();
 					touchCallback.handleDestinationUpdate();
