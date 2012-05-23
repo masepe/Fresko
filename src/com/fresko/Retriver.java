@@ -29,9 +29,8 @@ public class Retriver extends Activity {
         setContentView(R.layout.main);
         surface = (WorkSurface)findViewById(R.id.workTable);
         surface.setChunks(array);
-        Button buttonLoad = new Button(this.getApplicationContext());
-        Button buttonSend = new Button(this.getApplicationContext());
-        setContentView(surface);
+        Button buttonLoad = (Button)findViewById(R.id.buttonLoad);
+        Button buttonSend = (Button)findViewById(R.id.buttonSend);
         Log.w("Fresko", "End of onCreate");
     }
 }
