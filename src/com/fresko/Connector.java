@@ -16,8 +16,11 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.graphics.drawable.Drawable;
 
 public class Connector {
-
-	private static final Object[][] EMPTPY_SERVICE_RESPONCE = new Object[1][1];
+	
+	public static final String DEFAULT_SERVICE_URL = "http://172.17.37.69:8080/task3/puzzle";
+	
+	private static final String EMPTY_STRING = "";
+	private static final Drawable[][] EMPTY_ARRAY = new Drawable[1][1];
 	private String m_url;
 
 	public Connector(String url) {

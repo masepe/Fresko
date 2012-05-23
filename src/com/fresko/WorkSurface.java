@@ -5,12 +5,18 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public class WorkSurface extends SurfaceView implements SurfaceHolder.Callback {
 
+	Drawable[][] chunks;
+	Point selected;
+	Point destination;
+	
 	/** Handle to the application context, used to e.g. fetch Drawables. */
 	private Context mContext;
 
@@ -85,5 +91,29 @@ public class WorkSurface extends SurfaceView implements SurfaceHolder.Callback {
 		}
 
 		nativeCanvas.drawBitmap(buffer, 0, 0, null);
+	}
+
+	public Drawable[][] getChunks() {
+		return chunks;
+	}
+
+	public void setChunks(Drawable[][] chunks) {
+		this.chunks = chunks;
+	}
+
+	public Point getSelected() {
+		return selected;
+	}
+
+	public void setSelected(Point selected) {
+		this.selected = selected;
+	}
+
+	public Point getDestination() {
+		return destination;
+	}
+
+	public void setDestination(Point destination) {
+		this.destination = destination;
 	}
 }
