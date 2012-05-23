@@ -85,16 +85,22 @@ public class WorkSurface extends SurfaceView implements SurfaceHolder.Callback {
 	 */
 	public void updateBuffer() {
 		Canvas canvas = new Canvas(buffer);
-		canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(),
-				paint_antialisedDarker);
 		float posX = 0;
 		float posY = 0;
+		float chunkWidth = buffer.getWidth()/chunks[0].length;
+		float chunkHeight = buffer.getHeight()/chunks.length;
+		int x = 0;
+		int y = 0;
 		for(Bitmap[] line :chunks) {
 			for(Bitmap chunk: line){
-				canvas.drawCircle(posX, posY, (float) (30 * Math.random()),
-						paint_antialisedSolid);
+				canvas.drawBitmap(chunks[y][x++], posX, posY, paint_antialisedSolid);
+				posX =+ chunkWidth;
 			}
+			y ++;
+			posY =+ chunkHeight;
 		}
+		canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(),
+				paint_antialisedDarker);
 	}
 
 	/**
@@ -103,13 +109,7 @@ public class WorkSurface extends SurfaceView implements SurfaceHolder.Callback {
 	 * @param nativeCanvas
 	 */
 	public void doDraw(Canvas nativeCanvas) {
-		if (buffer == null) {
-			buffer = Bitmap.createBitmap(nativeCanvas.getWidth(),
-					nativeCanvas.getHeight(), Bitmap.Config.ARGB_8888);
-			nativeCanvas.drawColor(Color.BLACK);
-			updateBuffer();
-		}
-
+		//scale
 		nativeCanvas.drawBitmap(buffer, 0, 0, null);
 	}
 
@@ -119,6 +119,8 @@ public class WorkSurface extends SurfaceView implements SurfaceHolder.Callback {
 
 	public void setChunks(Bitmap[][] chunks) {
 		this.chunks = chunks;
+		buffer = Bitmap.createBitmap(chunks[0][0].getWidth() * chunks[0].length,
+				chunks[0][0].getHeight() * chunks.length, Bitmap.Config.ARGB_8888);
 	}
 
 	public Point getSelected() {
