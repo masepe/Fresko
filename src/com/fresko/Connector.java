@@ -115,8 +115,8 @@ public class Connector {
 
 	public String sendAnswer(String secret) {
 		HttpClient httpclient = new DefaultHttpClient();
-		httpclient.getParams().setParameter("teamId", TEAM_ID);
 		HttpGet httpget = new HttpGet(ANSWER_SERVICE_URL + secret);
+		httpget.setHeader("teamId", TEAM_ID);
 		HttpResponse response;
 		try {
 			response = httpclient.execute(httpget);
