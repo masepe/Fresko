@@ -56,11 +56,11 @@ public class Retriver extends Activity implements WorkSurface.TouchCallback {
 
 	@Override
 	public void handleSelectedUpdate() {
-		Log.w("Fresko", "Selected");
+		Log.w("Fresko", "Selected " + surface.getSelected() );
 	}
 
 	@Override
 	public void handleDestinationUpdate() {
-		Log.w("Fresko", "Destination");
+		Log.w("Fresko", "Destination " + surface.getDestination() );
 	}
 }

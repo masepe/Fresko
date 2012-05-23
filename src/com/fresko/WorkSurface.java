@@ -19,14 +19,15 @@ public class WorkSurface extends SurfaceView implements SurfaceHolder.Callback {
 
 		public void handleDestinationUpdate();
 	}
+
 	private TouchCallback touchCallback;
 
 	Bitmap[][] chunks;
 	Point selected;
 	Point destination;
-	
+
 	boolean suspended;
-	
+
 	/** Handle to the application context, used to e.g. fetch Drawables. */
 	private Context mContext;
 
@@ -89,21 +90,21 @@ public class WorkSurface extends SurfaceView implements SurfaceHolder.Callback {
 		Canvas canvas = new Canvas(buffer);
 		float posX = 0;
 		float posY = 0;
-		float chunkWidth = buffer.getWidth()/chunks[0].length;
-		float chunkHeight = buffer.getHeight()/chunks.length;
+		float chunkWidth = buffer.getWidth() / chunks[0].length;
+		float chunkHeight = buffer.getHeight() / chunks.length;
 		int x = 0;
 		int y = 0;
-		for(Bitmap[] line :chunks) {
-			for(Bitmap chunk: line){
-				canvas.drawBitmap(chunks[y][x++], posX, posY, paint_antialisedSolid);
+		for (Bitmap[] line : chunks) {
+			for (Bitmap chunk : line) {
+				canvas.drawBitmap(chunks[y][x++], posX, posY,
+						paint_antialisedSolid);
 				posX += chunkWidth;
 			}
-			y ++; 
-			x = 0; posX = 0.0f;
+			y++;
+			x = 0;
+			posX = 0.0f;
 			posY += chunkHeight;
 		}
-		canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(),
-				paint_antialisedDarker);
 	}
 
 	/**
@@ -112,12 +113,12 @@ public class WorkSurface extends SurfaceView implements SurfaceHolder.Callback {
 	 * @param nativeCanvas
 	 */
 	public void doDraw(Canvas nativeCanvas) {
-		//scale
-		nativeCanvas.save();
-		if(getWidth() != 0 && buffer != null) {
-			//scale
+		// scale
+		if (getWidth() != 0 && buffer != null) {
+			// scale
 			nativeCanvas.save();
-			nativeCanvas.scale(getWidth()/buffer.getWidth(), getHeight()/buffer.getHeight());
+			nativeCanvas.scale((float) getWidth() / (float) buffer.getWidth(),
+					(float) getHeight() / (float) buffer.getHeight());
 			nativeCanvas.drawBitmap(buffer, 0, 0, null);
 			nativeCanvas.restore();
 		} else {
@@ -131,8 +132,10 @@ public class WorkSurface extends SurfaceView implements SurfaceHolder.Callback {
 
 	public void setChunks(Bitmap[][] chunks) {
 		this.chunks = chunks;
-		buffer = Bitmap.createBitmap(chunks[0][0].getWidth() * chunks[0].length,
-				chunks[0][0].getHeight() * chunks.length, Bitmap.Config.ARGB_8888);
+		buffer = Bitmap.createBitmap(
+				chunks[0][0].getWidth() * chunks[0].length,
+				chunks[0][0].getHeight() * chunks.length,
+				Bitmap.Config.ARGB_8888);
 		updateAfterEvent();
 	}
 
@@ -155,7 +158,7 @@ public class WorkSurface extends SurfaceView implements SurfaceHolder.Callback {
 	public Bitmap getImage() {
 		return buffer;
 	}
-	
+
 	public void swapSelections() {
 		// Change image locations
 		selected = null;
@@ -174,55 +177,60 @@ public class WorkSurface extends SurfaceView implements SurfaceHolder.Callback {
 	public boolean onTouchEvent(MotionEvent event) {
 		if (chunks != null) {
 
-			if(suspended) {
-				Log.w("Fresco", "Work surface is in suspended state. Skiping touch event.");
+			if (suspended) {
+				Log.w("Fresco",
+						"Work surface is in suspended state. Skiping touch event.");
 				return true;
 			}
-			
+
 			float touched_x = event.getX();
 			float touched_y = event.getY();
 			int action = event.getAction();
 			boolean touched = false;
 			switch (action) {
-				case MotionEvent.ACTION_DOWN:
-					touched = true;
-					break;
-				case MotionEvent.ACTION_MOVE:
-					touched = true;
-					break;
-				case MotionEvent.ACTION_UP:
-					touched = false;
-					break;
-				case MotionEvent.ACTION_CANCEL:
-					touched = false;
-					break;
-				case MotionEvent.ACTION_OUTSIDE:
-					touched = false;
-					break;
-				default:
+			case MotionEvent.ACTION_DOWN:
+				touched = true;
+				break;
+			case MotionEvent.ACTION_MOVE:
+				touched = true;
+				break;
+			case MotionEvent.ACTION_UP:
+				touched = false;
+				break;
+			case MotionEvent.ACTION_CANCEL:
+				touched = false;
+				break;
+			case MotionEvent.ACTION_OUTSIDE:
+				touched = false;
+				break;
+			default:
 			}
-			if(touched) {
-				if(selected == null) {
-					selected = new Point((int) Math.floor(touched_x / getWidth()/chunks[0].length), (int)Math.floor(touched_y /getHeight()/chunks.length));
+			if (touched) {
+				if (selected == null) {
+					selected = new Point((int) Math.floor((float) touched_x
+							/ ((float) getWidth() / (float) chunks[0].length)),
+							(int) Math.floor((float) touched_y
+									/ ((float) getHeight()
+									/ (float) chunks.length)));
 					touchCallback.handleSelectedUpdate();
-				} else if(destination == null) {
-					destination = new Point((int) Math.floor(touched_x / getWidth()/chunks[0].length), (int)Math.floor(touched_y /getHeight()/chunks.length));
+				} else if (destination == null) {
+					destination = new Point((int) Math.floor((float) touched_x
+							/ ((float) getWidth() / (float) chunks[0].length)),
+							(int) Math.floor((float) touched_y
+									/ ((float) getHeight()
+									/ (float) chunks.length)));
 					updateAfterEvent();
-					new Thread() {
-						public void run() {
-							Bitmap selectedChunk = chunks[selected.y][selected.x];
-							chunks[selected.y][selected.x] = chunks[destination.y][selected.x];
-							chunks[destination.y][selected.x] = selectedChunk;
-							updateAfterEvent();
-							selected = null;
-							destination =null;
-						};
-					}.start();
+					Bitmap selectedChunk = chunks[selected.y][selected.x];
+					chunks[selected.y][selected.x] = chunks[destination.y][selected.x];
+					chunks[destination.y][selected.x] = selectedChunk;
+					updateAfterEvent();
 					touchCallback.handleDestinationUpdate();
+					selected = null;
+					destination = null;
 				}
 			}
 		}
-		
+
 		return super.onTouchEvent(event);
 	}
 }
