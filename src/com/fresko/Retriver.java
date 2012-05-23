@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 
 public class Retriver extends Activity {
 	Connector connector;
@@ -27,6 +28,8 @@ public class Retriver extends Activity {
 		}
         surface = new WorkSurface(this);
         surface.setChunks(array);
+        Button buttonLoad = new Button(this.getApplicationContext());
+        Button buttonSend = new Button(this.getApplicationContext());
         setContentView(surface);
         Log.w("Fresko", "End of onCreate");
     }

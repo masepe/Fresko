@@ -15,7 +15,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 
 public class Connector {
 
@@ -100,22 +99,6 @@ public class Connector {
 		return picturesMatrix;
 	}
 
-	private Drawable[][] convertToArrayOfDrawables(Object[][] responseArray) {
-		Drawable[][] picturesMatrix = new Drawable[responseArray.length][responseArray[0].length];
-		for (int i = 0; i < responseArray.length; i++)
-			for (int j = 0; j < responseArray[i].length; j++) {
-				picturesMatrix[i][j] = convertStreamToDrawable(new ByteArrayInputStream(
-						(byte[]) responseArray[i][j]));
-			}
-		return picturesMatrix;
-	}
-
-	private static Drawable convertStreamToDrawable(InputStream ip) {
-		Drawable picture = null;
-		String srcName = "image";
-		picture = Drawable.createFromStream(ip, srcName);
-		return picture;
-	}
 
 	private Bitmap convertStreamToBitmap(byte[] responseArray) {
 		Bitmap pic = null;
@@ -126,13 +109,4 @@ public class Connector {
 		return pic;
 	}
 
-	public static void main(String... strings) {
-		Connector con = new Connector("http://172.17.37.69:8080/task3/puzzle");
-		try {
-			con.connectAsArrayOfImages();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 }

@@ -3,5 +3,7 @@
 
     <string name="hello">Hello World!</string>
     <string name="app_name">Fresko</string>
+    <string name="loadButtonTitle">Load</string>
+    <string name="sendButtonTitle">Send</string>
 
 </resources>
