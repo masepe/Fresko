@@ -95,10 +95,11 @@ public class WorkSurface extends SurfaceView implements SurfaceHolder.Callback {
 		for(Bitmap[] line :chunks) {
 			for(Bitmap chunk: line){
 				canvas.drawBitmap(chunks[y][x++], posX, posY, paint_antialisedSolid);
-				posX =+ chunkWidth;
+				posX += chunkWidth;
 			}
-			y ++; x = 0;
-			posY =+ chunkHeight;
+			y ++; 
+			x = 0; posX = 0.0f;
+			posY += chunkHeight;
 		}
 		canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(),
 				paint_antialisedDarker);
@@ -192,10 +193,10 @@ public class WorkSurface extends SurfaceView implements SurfaceHolder.Callback {
 			}
 			if(touched) {
 				if(selected == null) {
-					selected = new Point((int)touched_x % (int) (getWidth()/chunks[0].length), (int)touched_y % (int) (getHeight()/chunks.length));
+					selected = new Point((int) Math.floor(touched_x / getWidth()/chunks[0].length), (int)Math.floor(touched_y /getHeight()/chunks.length));
 					touchCallback.handleSelectedUpdate();
 				} else if(destination == null) {
-					destination = new Point((int)touched_x % (int) (getWidth()/chunks[0].length), (int)touched_y % (int) (getHeight()/chunks.length));
+					destination = new Point((int) Math.floor(touched_x / getWidth()/chunks[0].length), (int)Math.floor(touched_y /getHeight()/chunks.length));
 					updateAfterEvent();
 					new Thread() {
 						public void run() {
